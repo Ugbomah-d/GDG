@@ -1,8 +1,8 @@
 const express = require("express")
 const cors = require("cors") 
 const morgan = require("morgan") 
-const main_router = require("./router/route")
-const connectDB = require("./db/compose")
+const main_router = require("./router/router")
+const connectDB = require("./db/cloud")
 const dotenv = require("dotenv").config()
 
 const app = express()
