@@ -1,23 +1,26 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const connectDatbase = require('./db/cloud');
-const app = express();
-const PORT = 3000;
-const dotenv = require('dotenv').config();
+const express = require("express")
+const cors = require("cors") 
+const morgan = require("morgan") 
+const main_router = require("./router/route")
+const connectDB = require("./db/compose")
+const dotenv = require("dotenv").config()
 
-// Middleware
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json()); // Allows parsing JSON bodies in requests
+const app = express()
+const port = 3000
 
-// Simple route
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+app.use(express.json())
+app.use(cors())
+app.use(morgan("dev"))
+app.use("", main_router)
 
-// Start server
-app.listen(PORT, () => {
-  connectDatbase(process.env.DATABASE_URL)
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+app.get("/", async(req, res) => {
+    res.status(200).json({
+        message: "You have complied succesfully",
+        code: 200, 
+    })
+})
+
+app.listen(port, () => {
+    connectDB(process.env.DATABASE_URL)
+    console.log(`Listening on port ${port}`)
+})
